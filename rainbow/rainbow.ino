@@ -1,16 +1,16 @@
 #include <Adafruit_NeoPixel.h>
 
-#define LED_PIN    6
-#define LED_COUNT 16
+#define LED_PIN_RIGHT   6
+#define LED_PIN_LEFT    7
+#define LED_COUNT      16
 
-Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel ringRight = Adafruit_NeoPixel(LED_COUNT, LED_PIN_RIGHT, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel ringLeft = Adafruit_NeoPixel(LED_COUNT, LED_PIN_LEFT, NEO_GRB + NEO_KHZ800);
 
 void setup() {
-  strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
-  strip.show();            // Turn OFF all pixels ASAP
-  strip.setBrightness(15); // Set BRIGHTNESS to about 1/5 (max = 255)
+  ringSetup(ringRight);
+  ringSetup(ringLeft);
 }
-
 
 void loop() {
 
@@ -28,7 +28,6 @@ void loop() {
     for(int i=0; i < LED_COUNT; i++) {
       int pixelHue = pixelHueStart + (i * hueInterval);
       setPixelHue((i + modShift) % LED_COUNT, pixelHue);
-      strip.show();
     }
 
     delay(delayBetweenUpdates);
@@ -36,6 +35,16 @@ void loop() {
   }
 }
 
+void ringSetup(Adafruit_NeoPixel &ring) {
+  ring.begin();
+  ring.show();            // Turn OFF all pixels ASAP
+  ring.setBrightness(15); // Set BRIGHTNESS to about 1/5 (max = 255)
+}
+
+
 void setPixelHue(int i, long hue) {
-  strip.setPixelColor(i, strip.gamma32(strip.ColorHSV(hue)));
+  ringRight.setPixelColor(i, ringRight.gamma32(ringRight.ColorHSV(hue)));
+  ringRight.show();
+  ringLeft.setPixelColor(i, ringLeft.gamma32(ringLeft.ColorHSV(hue)));
+  ringLeft.show();
 }
