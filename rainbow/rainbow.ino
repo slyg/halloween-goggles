@@ -40,22 +40,30 @@ void setup() {
 
 void loop() {
 
-  long pixelHueStart = 2*65536;
+  long pixelHueStart = 0*65536;
 
-  long pixelHueEnd = 2.3*65536;
+  long pixelHueEnd = 0.2*65536;
 
-  for(long pixelHue=pixelHueStart; pixelHue<pixelHueEnd; pixelHue += 16) {
+  int interval = 256;
+
+  int delayBetweenUpdates = 10;
+
+  for(long pixelHue = pixelHueStart; pixelHue < pixelHueEnd; pixelHue += interval) {
     for(int i=0; i<strip.numPixels(); i++) { // For each pixel in strip...
-      strip.setPixelColor(i, strip.gamma32(strip.ColorHSV(pixelHue)));
+      setPixelHue(i, pixelHue);
     }
     strip.show();
-    delay(10);
+    delay(delayBetweenUpdates);
   }
-  for(long pixelHue=pixelHueEnd; pixelHue>pixelHueStart; pixelHue -= 16) {
+  for(long pixelHue = pixelHueEnd; pixelHue > pixelHueStart; pixelHue -= interval) {
     for(int i=0; i<strip.numPixels(); i++) { // For each pixel in strip...
-      strip.setPixelColor(i, strip.gamma32(strip.ColorHSV(pixelHue)));
+      setPixelHue(i, pixelHue);
     }
     strip.show();
-    delay(10);
+    delay(delayBetweenUpdates);
   }
+}
+
+void setPixelHue(int i, long hue) {
+  strip.setPixelColor(i, strip.gamma32(strip.ColorHSV(hue)));
 }
