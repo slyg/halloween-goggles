@@ -23,25 +23,11 @@ void loop()
   int delayBetweenUpdates = 10;
 
   setRingsFadeInWithHue(pixelHueStart, 100, 255);
-
-  for (int hue = pixelHueStart; hue < pixelHueEnd; hue += hueInterval)
-  {
-    setRingsHue(hue);
-    delay(delayBetweenUpdates);
-  }
-
+  increaseHue(pixelHueStart, pixelHueEnd, hueInterval, delayBetweenUpdates);
   delay(random(1000, 20000));
-
-  for (int hue = pixelHueEnd; hue > pixelHueStart; hue -= hueInterval)
-  {
-    setRingsHue(hue);
-    delay(delayBetweenUpdates);
-  }
-
+  decreaseHue(pixelHueEnd, pixelHueStart, hueInterval, delayBetweenUpdates);
   delay(random(1000, 20000));
-
   setRingsFadeOutWithHue(pixelHueStart, 255, 100);
-
   delay(1000);
 }
 
@@ -61,6 +47,24 @@ void setRingsHue(long hue)
   }
   ringRight.show();
   ringLeft.show();
+}
+
+void increaseHue(int hueStart, int hueEnd, int hueInterval, int delayBetweenUpdates)
+{
+  for (int hue = hueStart; hue < hueEnd; hue += hueInterval)
+  {
+    setRingsHue(hue);
+    delay(delayBetweenUpdates);
+  }
+}
+
+void decreaseHue(int hueStart, int hueEnd, int hueInterval, int delayBetweenUpdates)
+{
+  for (int hue = hueEnd; hue > hueStart; hue -= hueInterval)
+  {
+    setRingsHue(hue);
+    delay(delayBetweenUpdates);
+  }
 }
 
 void setRingsFadeInWithHue(long hue, int minSaturation, int maxSaturation)
