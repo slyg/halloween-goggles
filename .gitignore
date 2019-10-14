@@ -1,2 +1,4 @@
 bin/arduino-cli
 .DS_Store
+*.elf
+*.hex
