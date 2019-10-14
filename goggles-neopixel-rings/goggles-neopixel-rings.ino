@@ -13,7 +13,6 @@ void setup()
 {
   ringSetup(ringRight);
   ringSetup(ringLeft);
-  setRingsFadeInWithHue(0, 0, 100);
 }
 
 void loop()
